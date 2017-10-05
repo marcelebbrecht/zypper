@@ -47,18 +47,18 @@ class zypper (
 	Optional[Boolean] $purge      = $zapper::purge
 )
 {
-	$keep = inline_template('<%= 
-		def find_tag_val(hash, tag)
-			returnarray = []
-			hash.map do |k, v|
-				return v if k.to_sym == tag
-				vr = find_tag_val(v, tag) if v.kind_of?(Hash)
-				returnarray.push(vr + ".repo") if vr
-			end
-			return returnarray
-		end 
-		find_tag_val(@sources, :file)
-	%>')
+	#$keep = inline_template('<%= 
+	#	def find_tag_val(hash, tag)
+	#		returnarray = []
+	#		hash.map do |k, v|
+	#			return v if k.to_sym == tag
+	#			vr = find_tag_val(v, tag) if v.kind_of?(Hash)
+	#			returnarray.push(vr + ".repo") if vr
+	#		end
+	#		return returnarray
+	#	end 
+	#	find_tag_val(@sources, :file)
+	#%>')
 
 	file { 'repos.d':
 		ensure  => directory,
@@ -68,7 +68,7 @@ class zypper (
 		mode    => '0755',
 		purge   => $purge,
 		recurse => $purge,
-		ignore  => $keep,
+	#	ignore  => $keep,
 	}
 
 	if $sources {
